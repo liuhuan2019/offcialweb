@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../background/css/index.css">
+    <script src="../../background/js/vue.js"></script>
+    <script src="../../background/js/index.js"></script>
+</head>
+<body>
+   <div id="app">
+       <p >标题</p>
+       <el-input
+               type="text"
+               placeholder="请输入内容"
+               v-model="text"
+               maxlength="20"
+               show-word-limit>
+       </el-input>
+       <div style="margin: 20px 0;"></div>
+       <p>内容</p>
+       <el-input
+               type="textarea"
+               placeholder="请输入内容"
+               v-model="textarea"
+               maxlength="500"
+               show-word-limit>
+       </el-input>
+       <p>图片</p>
+       <div id="upload">
+           <el-upload
+                   class="upload-demo"
+                   drag
+                   action="https://jsonplaceholder.typicode.com/posts/"
+                   multiple>
+               <i class="el-icon-upload"></i>
+               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+               <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+           </el-upload>
+       </div>
+   </div>
+</body>
+<!-- 引入组件库 -->
+<script src="../js/element-ui.js"></script>
+<script src="../plugins/jquery/dist/jquery.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script>
+    var Main = {
+        data() {
+            return {
+                text: '',
+                textarea: ''
+            }
+        }
+    }
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+
+    new Vue().$mount('#upload')
+</script>
+</html>

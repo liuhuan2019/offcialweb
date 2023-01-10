@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../background/css/index.css">
+    <script src="../../background/js/vue.js"></script>
+    <script src="../../background/js/index.js"></script>
+</head>
+<body>
+     <div id="app">
+         <el-row>
+              <p>客服QQ</p>
+              <el-input v-model="input" placeholder="请输入QQ" style="width:30%"></el-input>
+              <el-button type="primary">修改</el-button>
+              <el-button type="danger">删除</el-button>
+              <p>客服电话</p>
+              <el-input v-model="input" placeholder="请输入电话" style="width:30%"></el-input>
+              <el-button type="primary">修改</el-button>
+              <el-button type="danger">删除</el-button>
+         </el-row>
+         <p>官方微信</p>
+         <el-upload
+                 class="upload-demo"
+                 ref="upload"
+                 action="https://jsonplaceholder.typicode.com/posts/"
+                 :on-preview="handlePreview"
+                 :on-remove="handleRemove"
+                 :file-list="fileList"
+                 :auto-upload="false">
+             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
+         </el-upload>
+         <p>页面显示</p>
+         <el-table
+                 :data="tableData"
+                 style="width: 100%">
+             <el-table-column
+                     prop="qq"
+                     label="QQ"
+                     width="180">
+             </el-table-column>
+             <el-table-column
+                     prop="phone"
+                     label="电话"
+                     width="180">
+             </el-table-column>
+             <el-table-column
+                     prop="WeChat"
+                     label="官方微信">
+             </el-table-column>
+         </el-table>
+     </div>
+</body>
+<!-- 引入组件库 -->
+<script src="../js/element-ui.js"></script>
+<script src="../plugins/jquery/dist/jquery.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script>
+    var Main = {
+        data() {
+            return {
+                input: '',
+                tableData: [{
+                    qq: '789456123',
+                    phone: '400399766',
+                    WeChat: '324134',
+                }]
+            };
+            //图片上传
+            return {
+                fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+            };
+        },
+        //图片上传
+        methods: {
+            submitUpload() {
+                this.$refs.upload.submit();
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePreview(file) {
+                console.log(file);
+            },
+        }
+    }
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+
+</script>
+</html>

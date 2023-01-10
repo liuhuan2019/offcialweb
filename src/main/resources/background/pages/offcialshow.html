@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台系统</title>
+    <meta name="description" content="后台系统">
+    <meta name="keywords" content="后台系统">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../css/element-ui.css">
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<style scoped>
+    .test{
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        margin-top: 20px;
+    }
+    .uploads{
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    .clicks{
+        width: 100px;
+        height: 30px;
+        background-color: #409eff;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        margin: 0 0 0 50px;
+    }
+    .imgs{
+        width: 100px;
+        height: 100px;
+        margin-left: 50px;
+    }
+</style>
+<body>
+<div>
+
+</div>
+</body>
+<!-- 引入组件库 -->
+<script src="../js/vue.js"></script>
+<script src="../js/element-ui.js"></script>
+<script src="../plugins/jquery/dist/jquery.js"></script>
+<script src="../js/data.json"></script>
+<script src="../js/base.js"></script>
+<template>
+    <div class="test">
+
+        <!--使用input标签，并通过type和accept属性限定图片类型。-->
+        <!--这里这样设计是因为：input这个颜色、样式是固定的，所以我就把它的宽、高设为0，然后通过一个按钮来触发-->
+        <!--选择图片时，点击确定后会触发onchange方法，给缩略图url赋值-->
+        <input class="uploads" id="select" type="file" v-on:change="changeImg" accept="image/*"/>
+        <button class="clicks" v-on:click="select">选择图片</button>
+        <button class="clicks" v-on:click="upload">上传图片</button>
+        <!--缩略图-->
+        <img class="imgs" :src="urls"/>
+        <!--回传图片-->
+        <img class="imgs" :src="urls1"/>
+    </div>
+</template>
+<script>
+    export default {
+        name: "test",
+        data(){
+            return {
+                urls: ' ',
+                urls1: ' '
+            }
+        },
+        methods:{
+            changeImg(){
+                let that = this;
+                //新建文件读取对象
+                let reader = new FileReader();
+                //读取上传的图片
+                reader.readAsDataURL(document.getElementById("select").files[0]);
+                //加载
+                reader.onload = function (){
+                    //将加载的值赋值给缩略图src
+                    that.urls = this.result;
+                }
+            },
+            upload(){
+                let that = this;
+                let formdData = new FormData();
+                formdData.append('files',document.getElementById("select").files[0]);
+                that.$axios.defaults.baseURL='http://localhost:8081'
+                that.$axios({
+                    method: 'post',
+                    url: '/test/upload',
+                    data: formdData,
+                    headers: {"Content-Type": "multipart/form-data"}//设置Content-Type类型
+                }).then((result) => {
+                    console.log(result);
+                    that.urls1 = result.data;
+                });
+            },
+            select(){
+                //触发点击input
+                document.getElementById("select").click();
+            }
+        }
+    }
+</script>
+</html>

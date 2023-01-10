@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../background/css/index.css">
+    <script src="../../background/js/vue.js"></script>
+    <script src="../../background/js/index.js"></script>
+</head>
+<body>
+     <div id="app">
+         <p>图片上传</p>
+         <el-upload
+                 class="upload-demo"
+                 drag
+                 action="https://jsonplaceholder.typicode.com/posts/"
+                 multiple>
+             <i class="el-icon-upload"></i>
+             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+             <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+         </el-upload>
+         <p>日期选择</p>
+         <div class="block">
+             <el-date-picker
+                     v-model="value1"
+                     type="date"
+                     placeholder="选择日期">
+             </el-date-picker>
+         </div>
+         <p>链接</p>
+         <el-input placeholder="请输入内容" v-model="input1" style="width: 50%">
+             <template slot="prepend">Http://</template>
+         </el-input>
+         <p>内容</p>
+         <el-input
+                 type="textarea"
+                 :rows="2"
+                 placeholder="请输入内容"
+                 v-model="textarea" style="width: 50%">
+         </el-input><br>
+
+         <el-button type="primary" style="margin-top: 15px;margin-left: 25px" >提交</el-button>
+
+          <p>内容显示</p>
+          <el-table :data="tableData" style="width: 100%">
+              <el-table-column
+                      label="标题"
+                      width="180">
+                  <template slot-scope="scope">
+                      <span style="margin-left: 10px">{{ scope.row.companyTitle }}</span>
+                  </template>
+              </el-table-column>
+              <el-table-column
+                      label="内容"
+                      width="180">
+                  <template slot-scope="scope">
+                      <span style="margin-left: 10px">{{ scope.row.companyText }}</span>
+                  </template>
+              </el-table-column>
+              <el-table-column
+                      prop="thumbnail"
+                      label="缩略图">
+                  <template slot-scope="scope">
+                      <img :src="scope.row.companyImage" min-width="70" height="70"/>
+                  </template>
+              </el-table-column>
+              <el-table-column label="操作">
+                  <template slot-scope="scope">
+                      <el-button
+                              size="mini"
+                              type="danger"
+                              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                  </template>
+              </el-table-column>
+          </el-table>
+     </div>
+</body>
+<!-- 引入组件库 -->
+<script src="../js/element-ui.js"></script>
+<script src="../plugins/jquery/dist/jquery.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script>
+    var Main = {
+        data() {
+            return {
+                pickerOptions: {
+                    disabledDate(time) {
+                        return time.getTime() > Date.now();
+                    },
+                    shortcuts: [{
+                        text: '今天',
+                        onClick(picker) {
+                            picker.$emit('pick', new Date());
+                        }
+                    }, {
+                        text: '昨天',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() - 3600 * 1000 * 24);
+                            picker.$emit('pick', date);
+                        }
+                    }, {
+                        text: '一周前',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', date);
+                        }
+                    }]
+                },
+                value1: '',
+
+                tableData: [{
+                    companyTitle: '晨星公司',
+                    companyText: '成立于2001年历经20年',
+                    companyImage: 'https://a1.cdn.91360.com/cms/bs3/upload/section/31c9f4a94769e924b7ccd764c075b29a_t.png'
+                }],
+
+                textarea: ''
+            }
+        },
+        methods:{
+            handleDelete(index, row) {
+                console.log(index, row);
+            }
+        }
+    }
+    var Ctor = Vue.extend(Main)
+    new Vue().$mount('#app')
+</script>
+</html>
