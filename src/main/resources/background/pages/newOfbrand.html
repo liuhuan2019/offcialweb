@@ -44,24 +44,31 @@
           <p>内容显示</p>
           <el-table :data="tableData" style="width: 100%">
               <el-table-column
-                      label="标题"
+                      label="图片"
                       width="180">
                   <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.companyTitle }}</span>
+                      <img :src="scope.row.newImage" min-width="70" height="70"/>
                   </template>
               </el-table-column>
               <el-table-column
-                      label="内容"
+                      label="日期"
                       width="180">
                   <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.companyText }}</span>
+                      <span style="margin-left: 10px">{{ scope.row.newDate }}</span>
                   </template>
               </el-table-column>
               <el-table-column
                       prop="thumbnail"
-                      label="缩略图">
+                      label="链接">
                   <template slot-scope="scope">
-                      <img :src="scope.row.companyImage" min-width="70" height="70"/>
+                      <span style="margin-left: 10px">{{ scope.row.newLink}}</span>
+                  </template>
+              </el-table-column>
+              <el-table-column
+                      prop="thumbnail"
+                      label="内容">
+                  <template slot-scope="scope">
+                      <span style="margin-left: 10px">{{scope.row.newText }}</span>
                   </template>
               </el-table-column>
               <el-table-column label="操作">
@@ -87,37 +94,45 @@
                     disabledDate(time) {
                         return time.getTime() > Date.now();
                     },
-                    shortcuts: [{
-                        text: '今天',
-                        onClick(picker) {
-                            picker.$emit('pick', new Date());
-                        }
-                    }, {
-                        text: '昨天',
-                        onClick(picker) {
-                            const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24);
-                            picker.$emit('pick', date);
-                        }
-                    }, {
-                        text: '一周前',
-                        onClick(picker) {
-                            const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-                            picker.$emit('pick', date);
-                        }
-                    }]
+                    shortcuts: [
+                        {
+                            text: '今天',
+                            onClick(picker) {
+                                picker.$emit('pick', new Date());
+                            }
+                        }, {
+                            text: '昨天',
+                            onClick(picker) {
+                                const date = new Date();
+                                date.setTime(date.getTime() - 3600 * 1000 * 24);
+                                picker.$emit('pick', date);
+                            }
+                        }, {
+                            text: '一周前',
+                            onClick(picker) {
+                                const date = new Date();
+                                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                                picker.$emit('pick', date);
+                            }
+                        }]
                 },
+
+
+
+
+
                 value1: '',
 
-                tableData: [{
-                    companyTitle: '晨星公司',
-                    companyText: '成立于2001年历经20年',
-                    companyImage: 'https://a1.cdn.91360.com/cms/bs3/upload/section/31c9f4a94769e924b7ccd764c075b29a_t.png'
-                }],
+                textarea: '',
 
-                textarea: ''
+                tableData: [{
+                    newImage: 'https://a1.cdn.91360.com/cms/bs3/upload/section/31c9f4a94769e924b7ccd764c075b29a_t.png',
+                    newDate: '2019-02-03',
+                    newLink:'wwww.baidu.com',
+                    newText:'2023年，地方如何更好地借力资本市场，助力实体经济高质量发展。在近期陆续召开的地方两会上，各地都给出了明确的“任务书”。其中，设立新增上市企业目标数量，大力培育“专精特新”企业，支持当地证券及期货交易所改革，推动REITs试点等成为亮点。'
+                }],
             }
+
         },
         methods:{
             handleDelete(index, row) {

@@ -44,7 +44,7 @@
                      label="图片"
                      width="180">
                  <template slot-scope="scope">
-                     <span style="margin-left: 10px">{{ scope.row.img }}</span>
+                     <img :src="scope.row.img" min-width="70" height="70"/>
                  </template>
              </el-table-column>
              <el-table-column
@@ -75,7 +75,7 @@
                     firstSelect: '金属',
                     secondSelect: '铜',
                     text:'',
-                    img: ''
+                    img: 'https://a1.cdn.91360.com/cms/bs3/upload/section/31c9f4a94769e924b7ccd764c075b29a_t.png'
                 }],
                 value: [],
                 options: [{

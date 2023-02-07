@@ -25,8 +25,7 @@
                  placeholder="请输入内容"
                  v-model="text"
                  maxlength="20"
-                 show-word-limit
-         >
+                 show-word-limit>
          </el-input>
          <div style="margin: 20px 0;"></div>
          <p>内容</p>
@@ -35,10 +34,9 @@
                  placeholder="请输入内容"
                  v-model="textarea"
                  maxlength="500"
-                 show-word-limit
-         >
+                 show-word-limit>
          </el-input>
-         <el-button type="primary">提交</el-button>
+         <el-button type="primary" style="margin-top: 15px;margin-left: 25px">提交</el-button>
          <p>内容</p>
          <el-table :data="tableData" style="width: 100%">
              <el-table-column

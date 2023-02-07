@@ -26,6 +26,14 @@ public class TopController {
     @Autowired
     private TopService topService;
 
+    /***
+     * 轮播图插入
+     * @param
+     */
+    public JsonResult addPicture(){
+        return new JsonResult(true,"200","添加成功");
+    }
+
 
     @ApiOperation(value = "删除首页电话号")
     @DeleteMapping("/deleteNumber")
